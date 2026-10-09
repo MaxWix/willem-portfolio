@@ -1,0 +1,489 @@
+:root {
+  --green: #008000;
+  --green-dot: #3aa83a;
+  --green-light: #5fe35f;
+  --yellow: #ffff00;
+  --black: #000;
+  --ink: #f5ece4;
+
+  --font-nav: "Lexend", system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mark: "Slibinas", Georgia, serif;
+}
+
+/* PP Woodland Bold, for the WILLEMWILLEM wordmark. The file name must match
+   the file in public/fonts exactly, including capital letters — live hosts
+   are case-sensitive even though your Mac isn't. */
+@font-face {
+  font-family: "PP Woodland";
+  src: url("/fonts/PPWoodland-bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: "Slibinas";
+  src: url("/fonts/Slibinas.otf") format("opentype");
+  font-display: block;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--green);
+  /* dotted grid from the mockups */
+  background-image: radial-gradient(var(--green-dot) 1px, transparent 1.2px);
+  background-size: 14px 14px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ---------- nav ---------- */
+.nav {
+  display: flex;
+  justify-content: flex-end;
+}
+.nav__link {
+  font-family: var(--font-nav);
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  color: var(--yellow);
+  text-decoration: none;
+  padding: 12px 24px;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+.nav__link:hover {
+  color: #fff;
+}
+.nav__link.active {
+  background: var(--yellow);
+  color: var(--green);
+}
+.nav__link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -4px;
+}
+
+/* ---------- center stage ---------- */
+.stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(24px, 6vw, 80px) 16px clamp(24px, 4vw, 48px);
+}
+
+.panel {
+  color: #1b2900;
+  width: min(80vw, 1146px);
+  aspect-ratio: 16 / 9;
+  background: #62e662;
+}
+.panel--media {
+  overflow: hidden;
+}
+
+.hero-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--black);
+}
+
+.panel--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 6% 8%;
+  gap: 6%;
+}
+
+/* about */
+/* Both columns take the bio's height, so the first service lines up with the
+   top of the bio and the last service with its bottom. */
+.panel--about {
+  align-items: stretch;
+  align-content: center;
+}
+/* Trim the space above the capitals and below the baseline so the edges
+   that line up are the visible letters, not the line boxes. */
+.panel--about .services li,
+.panel--about .bio {
+  text-box: trim-both cap alphabetic;
+}
+.services {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
+.services li {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2.1vw, 30px);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  max-width: 11em;
+  margin: 0 auto;
+}
+.bio {
+  font-size: clamp(14px, 1.4vw, 20px);
+  line-height: 1.17;
+  letter-spacing: 0.03em;
+  text-align: justify;
+  max-width: 17em;
+}
+
+/* contact */
+.contact__intro {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.6vw, 38px);
+  text-transform: uppercase;
+  line-height: 1.2;
+  text-align: center;
+  max-width: 13em;
+  margin: 0 auto;
+}
+.contact__list {
+  display: grid;
+  gap: 1.4em;
+  font-size: clamp(14px, 1.4vw, 20px);
+}
+.contact__list dt {
+  font-family: var(--font-nav);
+  font-weight: 800;
+  color: #1b2900;
+  font-size: 0.75em;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+}
+.contact__list a {
+  color: #1b2900;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+.contact__list a:hover {
+  color: var(--yellow);
+}
+
+/* ---------- giant wordmark ---------- */
+/* Wordmark.jsx measures the letters and sets --mark-size (fills the width),
+   --ink-height (box = exactly the letters) and --ink-shift (lifts the text so
+   the tops of the capitals sit at the top of the box). Fallbacks apply until then. */
+.wordmark {
+  --mark-size: 13vw;
+  overflow: hidden;
+  height: var(--ink-height, auto);
+  margin-bottom: 0.5vw; /* small breathing room under the serifs */
+}
+.wordmark__text {
+  display: inline-block; /* shrink to the text so its width can be measured */
+  vertical-align: top;
+  font-family: var(--font-mark);
+  font-size: var(--mark-size);
+  line-height: 1;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  color: var(--green-light);
+  transform: translate(
+    calc(-1 * var(--ink-x, 0px)),
+    calc(-1 * var(--ink-shift, 0px))
+  );
+  user-select: none;
+}
+
+/* ---------- sound ---------- */
+.panel--media {
+  position: relative;
+}
+.sound-toggle {
+  position: absolute;
+  z-index: 1;
+  right: 16px;
+  bottom: 16px;
+  font-family: var(--font-nav);
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--green);
+  background: var(--yellow);
+  border: 0;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+.sound-toggle[aria-pressed="false"] {
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--yellow);
+}
+.sound-toggle:hover {
+  filter: brightness(1.1);
+}
+.sound-toggle:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ---------- video controls (shown on hover / tap) ---------- */
+.video-ui {
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* let clicks reach the video except on the controls */
+  opacity: 0;
+  transition: opacity 0.2s;
+  /* soft shade at the bottom so the time and bar stay readable */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent 28%);
+}
+.is-active .video-ui,
+.video-ui:focus-within {
+  opacity: 1;
+}
+.is-active .video-ui > *,
+.video-ui:focus-within > * {
+  pointer-events: auto;
+}
+
+.video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: var(--yellow);
+  color: var(--green);
+  cursor: pointer;
+}
+.video-play:hover {
+  filter: brightness(1.1);
+}
+.video-play:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+.video-bar {
+  position: absolute;
+  left: 16px;
+  right: 136px; /* leaves room for the sound button */
+  bottom: 16px;
+  height: 33px; /* same height as the sound button, so they line up */
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.video-time {
+  font-family: var(--font-nav);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--yellow);
+  font-variant-numeric: tabular-nums; /* digits don't wobble as time changes */
+  white-space: nowrap;
+}
+.video-track {
+  flex: 1;
+  height: 24px; /* tall, invisible hit area; the visible line is drawn below */
+  position: relative;
+  cursor: pointer;
+  touch-action: none; /* dragging on touch screens scrubs instead of scrolling */
+}
+.video-track::before,
+.video-track__fill {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 4px;
+  transform: translateY(-50%);
+}
+.video-track::before {
+  background: rgba(255, 255, 255, 0.35);
+}
+.video-track__fill {
+  --progress: 0;
+  right: auto;
+  width: calc(var(--progress) * 100%);
+  background: var(--yellow);
+}
+/* square handle at the playhead */
+.video-track__fill::after {
+  content: "";
+  position: absolute;
+  right: -7px;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  transform: translateY(-50%);
+  background: var(--yellow);
+}
+.video-track:hover::before {
+  background: rgba(255, 255, 255, 0.5);
+}
+.video-track:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 16px;
+  background-color: var(--green);
+  background-image: radial-gradient(var(--green-dot) 1px, transparent 1.2px);
+  background-size: 14px 14px;
+  text-align: center;
+}
+.splash__title {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 4vw, 48px);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.splash__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+.splash__btn {
+  font-family: var(--font-nav);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  padding: 14px 28px;
+  border: 2px solid var(--yellow);
+  background: transparent;
+  color: var(--yellow);
+  cursor: pointer;
+}
+.splash__btn--primary {
+  background: var(--yellow);
+  color: var(--green);
+}
+.splash__btn:hover {
+  filter: brightness(1.1);
+}
+.splash__btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+/* wordmark along the bottom of the splash, letters jittering */
+.splash__mark {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+.wordmark--jitter {
+  overflow: visible; /* let twitching letters poke out instead of being clipped */
+}
+.wordmark__letter {
+  display: inline-block; /* needed so each letter can move on its own */
+  --amp: 1; /* overall strength of the twitch */
+  animation: jitter var(--dur, 4s) var(--delay, 0s) infinite;
+  /* hard jumps between poses rather than smooth slides — reads as a jitter */
+  animation-timing-function: steps(1, end);
+}
+/* Still most of the time, then a quick two-step twitch near the end. */
+@keyframes jitter {
+  0%,
+  84% {
+    transform: none;
+  }
+  86% {
+    transform: translate(
+        calc(var(--dx) * var(--amp)),
+        calc(var(--dy) * var(--amp))
+      )
+      rotate(calc(var(--rot) * var(--amp)));
+  }
+  90% {
+    transform: translate(
+        calc(var(--dx) * var(--amp) * -0.5),
+        calc(var(--dy) * var(--amp) * -0.4)
+      )
+      rotate(calc(var(--rot) * var(--amp) * -0.6));
+  }
+  94%,
+  100% {
+    transform: none;
+  }
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 720px) {
+  .nav__link {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+  .panel {
+    width: 100%;
+  }
+  .panel--split {
+    aspect-ratio: auto;
+    grid-template-columns: 1fr;
+    padding: 40px 24px;
+    gap: 40px;
+  }
+  .services {
+    gap: 28px;
+  }
+  .bio {
+    max-width: none;
+    text-align: left;
+  }
+  .video-play {
+    width: 56px;
+    height: 56px;
+  }
+  .video-time {
+    display: none; /* not enough room next to the bar on phones */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav__link {
+    transition: none;
+  }
+  /* "reduce motion" is on: keep the jitter, but smaller */
+  .wordmark__letter {
+    --amp: 0.4;
+  }
+}
