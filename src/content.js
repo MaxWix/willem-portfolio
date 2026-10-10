@@ -26,7 +26,7 @@ export const about = {
 };
 
 export const contact = {
-  intro: "For shoots, edits, and collaborations, get in touch.",
+  intro: "Get in touch",
   links: [
     {
       label: "Email",
