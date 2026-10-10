@@ -1,6 +1,6 @@
 :root {
   --green: #1b2900;
-  --green-dot: #3aa83a;
+  --green-dot: #3e5d01;
   --green-light: #5fe35f;
   --yellow: #ffff00;
   --black: #000;
@@ -234,14 +234,14 @@ body {
   z-index: 1;
   right: 16px;
   bottom: 16px;
-  font-family: var(--font-nav);
-  font-weight: 800;
-  font-size: 14px;
-  letter-spacing: 0.04em;
+  width: 33px;
+  height: 33px;
+  display: grid;
+  place-items: center;
   color: var(--green);
   background: var(--yellow);
   border: 0;
-  padding: 8px 14px;
+  padding: 0;
   cursor: pointer;
 }
 .sound-toggle[aria-pressed="false"] {
@@ -266,11 +266,11 @@ body {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent 28%);
 }
 .is-active .video-ui,
-.video-ui:focus-within {
+.video-ui:has(:focus-visible) {
   opacity: 1;
 }
 .is-active .video-ui > *,
-.video-ui:focus-within > * {
+.video-ui:has(:focus-visible) > * {
   pointer-events: auto;
 }
 
@@ -299,7 +299,7 @@ body {
 .video-bar {
   position: absolute;
   left: 16px;
-  right: 136px; /* leaves room for the sound button */
+  right: 63px; /* leaves room for the sound button */
   bottom: 16px;
   height: 33px; /* same height as the sound button, so they line up */
   display: flex;

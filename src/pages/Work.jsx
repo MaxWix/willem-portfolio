@@ -174,7 +174,7 @@ export default function Work() {
         aria-pressed={soundOn}
         aria-label={soundOn ? "Mute video" : "Unmute video"}
       >
-        {soundOn ? "sound on" : "sound off"}
+        <VolumeIcon muted={!soundOn} />
       </button>
     </section>
   );
@@ -196,5 +196,26 @@ const PlayIcon = () => (
 const PauseIcon = () => (
   <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true">
     <path d="M6 4h4.5v16H6zM13.5 4H18v16h-4.5z" fill="currentColor" />
+  </svg>
+);
+
+// Speaker with sound waves; when muted, the same icon with a slash through
+// it (a thin gap is cut out around the slash so it reads clearly when small).
+const VolumeIcon = ({ muted }) => (
+  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+    <mask id="volume-slash-gap">
+      <rect width="24" height="24" fill="#fff" />
+      <path d="M3 3l18 18" stroke="#000" strokeWidth="5" />
+    </mask>
+    <g mask={muted ? "url(#volume-slash-gap)" : undefined}>
+      <path d="M3 9h4l5-4v14l-5-4H3z" fill="currentColor" />
+      <path
+        d="M15 8.5a5 5 0 0 1 0 7M17.5 6a8.5 8.5 0 0 1 0 12"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+    </g>
+    {muted && <path d="M3 3l18 18" stroke="currentColor" strokeWidth="2" />}
   </svg>
 );
