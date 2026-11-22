@@ -7,8 +7,26 @@ const TOUCH_SHOW_MS = 3000;
 // How far the arrow keys skip when the timeline has keyboard focus.
 const KEY_SKIP_S = 5;
 
+const MOBILE_QUERY = "(max-width: 768px)";
+
+function useIsMobile() {
+  // Read synchronously so the wrong video never starts loading first.
+  const [isMobile, setIsMobile] = useState(
+    () => window.matchMedia(MOBILE_QUERY).matches,
+  );
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_QUERY);
+    const onChange = (e) => setIsMobile(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+  return isMobile;
+}
+
 export default function Work() {
-  const { src, poster, title } = work.hero;
+  const { src, mobileSrc, poster, title } = work.hero;
+  const isMobile = useIsMobile();
+  const videoSrc = isMobile && mobileSrc ? mobileSrc : src;
   const { entered, soundOn, setSoundOn } = useSound();
   const videoRef = useRef(null);
   const fillRef = useRef(null);
@@ -32,7 +50,7 @@ export default function Work() {
         v.play().catch(() => {});
       });
     }
-  }, [soundOn, entered, setSoundOn]);
+  }, [soundOn, entered, setSoundOn, videoSrc]);
 
   // Move the progress bar every frame while playing, so it glides smoothly.
   // (Written straight to the element instead of through React state.)
@@ -112,7 +130,7 @@ export default function Work() {
 
   return (
     <section
-      className={`panel panel--media${shown ? " is-active" : ""}`}
+      className={`panel panel--media${isMobile ? " panel--mobile" : ""}${shown ? " is-active" : ""}`}
       onPointerEnter={onPointerEnter}
       onPointerLeave={onPointerLeave}
       onPointerDownCapture={onPointerDown}
@@ -120,7 +138,7 @@ export default function Work() {
       <video
         ref={videoRef}
         className="hero-video"
-        src={src}
+        src={videoSrc}
         poster={poster}
         muted
         loop

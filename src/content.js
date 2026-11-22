@@ -7,9 +7,9 @@ export const site = {
 };
 
 export const work = {
-  // Home page hero video. Drop files in /public/videos and point here.
   hero: {
     src: "/videos/reel.mov",
+    mobileSrc: "/videos/mobileReel.mov",
     poster: "/videos/concerts-poster.jpg",
     title: "Concerts — video + sound",
   },
@@ -22,7 +22,11 @@ export const about = {
     "Sound capture",
     "Video editing",
   ],
-  bio: `Willem Cousineau is an ambitious student, producer, and composer with an emphasis on artistic and interdisciplinary collaboration. He is half of the electronic R&B duo "Fool's Argot." They released their debut EP September 30th, 2022. Willem Cousineau continues to work with artists in the Philadelphia region and beyond, constantly branching out to explore new aesthetics and work with artists across mediums and genres.`,
+  bio: [
+    "Willem Cousineau is a composer, performer, and videographer from Philadelphia. He releases eccentric folk and electronic music under the alias Keepsake 1 Million. His work has been featured in performances at the Wilma Theater in Philadelphia, the Institute of Contemporary Art in Boston and Bates College Immersive Studio in Maine. In 2026, he founded the record label ",
+    { text: "Tiny Kick Records", href: "https://tinykickrecords.com/" },
+    " with Theo Rosenberg. Since 2023, he has been Videographer and Media Director for Urban Movement Arts, where he documents and amplifies the voices of local artists and educators.",
+  ],
 };
 
 export const contact = {
@@ -30,10 +34,13 @@ export const contact = {
   links: [
     {
       label: "Email",
-      href: "mailto:hello@example.com",
-      text: "hello@example.com",
+      href: "mailto:willemcous@gmail.com",
+      text: "willemcous@gmail.com",
     },
-    { label: "Instagram", href: "https://instagram.com/", text: "@handle" },
-    { label: "Vimeo", href: "https://vimeo.com/", text: "vimeo.com/handle" },
+    {
+      label: "Instagram",
+      href: "https://instagram.com/",
+      text: "@willemwillemvideo",
+    },
   ],
 };
